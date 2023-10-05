@@ -38,7 +38,7 @@
         "createDir": true,
         "overwriteFile": "false",
         "encoding": "none",
-        "x": 590,
+        "x": 620,
         "y": 320,
         "wires": [
             [
@@ -76,7 +76,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 390,
+        "x": 350,
         "y": 320,
         "wires": [
             [
@@ -123,7 +123,7 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 330,
+        "x": 340,
         "y": 140,
         "wires": [
             [
@@ -145,7 +145,7 @@
         "createDir": true,
         "overwriteFile": "true",
         "encoding": "none",
-        "x": 810,
+        "x": 820,
         "y": 140,
         "wires": [
             [
@@ -165,7 +165,7 @@
         "sendError": false,
         "encoding": "none",
         "allProps": true,
-        "x": 770,
+        "x": 800,
         "y": 180,
         "wires": [
             [
@@ -190,7 +190,7 @@
         "font": "",
         "fontSize": 16,
         "color": "#000000",
-        "x": 950,
+        "x": 1010,
         "y": 180,
         "wires": []
     },
@@ -209,8 +209,8 @@
         "className": "Gas AUS",
         "topic": "GasHahn  ZU :-D",
         "name": "Gas Aus",
-        "x": 540,
-        "y": 160,
+        "x": 600,
+        "y": 180,
         "wires": []
     },
     {
@@ -226,7 +226,7 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 750,
+        "x": 790,
         "y": 320,
         "wires": []
     },
@@ -278,8 +278,8 @@
         "topicType": "msg",
         "splitLayout": false,
         "className": "",
-        "x": 350,
-        "y": 220,
+        "x": 320,
+        "y": 240,
         "wires": [
             [
                 "a99c3ce8ed47a7fc",
@@ -300,7 +300,7 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 770,
+        "x": 800,
         "y": 220,
         "wires": []
     },
@@ -325,8 +325,8 @@
         "topic": "34",
         "payload": "",
         "payloadType": "date",
-        "x": 170,
-        "y": 220,
+        "x": 150,
+        "y": 240,
         "wires": [
             [
                 "19824ca3fa330a7f"
@@ -344,8 +344,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 530,
-        "y": 100,
+        "x": 590,
+        "y": 120,
         "wires": [
             [
                 "436cfeca90362dad",
@@ -386,7 +386,7 @@
         "name": "GasZahler",
         "tab": "5856af2e8f18fca7",
         "order": 1,
-        "disp": true,
+        "disp": false,
         "width": "6",
         "collapse": false,
         "className": ""

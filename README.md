@@ -2,7 +2,7 @@
 
 ESP8266 D1Mini
 
-Verabelung:
+Verkabelung:
 
 3V --[Wiederstand]--D7--/Reed-Kontakt\--GND
 
