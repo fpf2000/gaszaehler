@@ -1,0 +1,402 @@
+[
+    {
+        "id": "469887d1c5f61918",
+        "type": "tab",
+        "label": "GasZaehler",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "ef8e895a4145ae7c",
+        "type": "mqtt in",
+        "z": "469887d1c5f61918",
+        "name": "Gas_Zaehler",
+        "topic": "reed_gas_01",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "0475bde7bb1fd53b",
+        "nl": false,
+        "rap": false,
+        "inputs": 0,
+        "x": 150,
+        "y": 140,
+        "wires": [
+            [
+                "3f66533d041eb95d"
+            ]
+        ]
+    },
+    {
+        "id": "3f051b8b4c91a340",
+        "type": "file",
+        "z": "469887d1c5f61918",
+        "name": "Zähler sichern",
+        "filename": "/tmp/gasMengeTotal.txt",
+        "filenameType": "str",
+        "appendNewline": true,
+        "createDir": true,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 590,
+        "y": 320,
+        "wires": [
+            [
+                "6f7f4436d6686a9a"
+            ]
+        ]
+    },
+    {
+        "id": "e04dc36e400b44c7",
+        "type": "inject",
+        "z": "469887d1c5f61918",
+        "name": "",
+        "props": [],
+        "repeat": "600",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 130,
+        "y": 320,
+        "wires": [
+            [
+                "f4a38447e1acb2f8"
+            ]
+        ]
+    },
+    {
+        "id": "f4a38447e1acb2f8",
+        "type": "function",
+        "z": "469887d1c5f61918",
+        "name": "Ausgabe_Counter",
+        "func": "if (!msg.timestamp) msg.timestamp = Math.round(+new Date());\nvar totalSum = flow.get('totalSum') || 0;\nvar dt = new Date(msg.timestamp);\nvar msg = {\n    'month': dt.getMonth() + 1,\n    'day': dt.getDate(),\n    'year': dt.getFullYear(),\n    'hours': dt.getHours(),\n    'mins': dt.getMinutes(),\n    'msecs': dt.getMilliseconds()\n}\nmsg.payload = {totalSum , dt};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 390,
+        "y": 320,
+        "wires": [
+            [
+                "3f051b8b4c91a340"
+            ]
+        ]
+    },
+    {
+        "id": "436cfeca90362dad",
+        "type": "debug",
+        "z": "469887d1c5f61918",
+        "name": "mesage.Paload >",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 830,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "3f66533d041eb95d",
+        "type": "switch",
+        "z": "469887d1c5f61918",
+        "name": "Entweder oder",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "closed",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "open",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 330,
+        "y": 140,
+        "wires": [
+            [
+                "b1022d82f4c42f1b"
+            ],
+            [
+                "01a5e4bf8f0e3ef5"
+            ]
+        ]
+    },
+    {
+        "id": "a3dcbb74cc28d0ec",
+        "type": "file",
+        "z": "469887d1c5f61918",
+        "name": "Zähler sichern",
+        "filename": "/tmp/gasMenge.txt",
+        "filenameType": "str",
+        "appendNewline": true,
+        "createDir": true,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 810,
+        "y": 140,
+        "wires": [
+            [
+                "4bef20cdb6a8e20c"
+            ]
+        ]
+    },
+    {
+        "id": "4bef20cdb6a8e20c",
+        "type": "file in",
+        "z": "469887d1c5f61918",
+        "name": "Nachricht",
+        "filename": "/tmp/gasMenge.txt",
+        "filenameType": "str",
+        "format": "stream",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": true,
+        "x": 770,
+        "y": 180,
+        "wires": [
+            [
+                "20e5a233697d8c9c"
+            ]
+        ]
+    },
+    {
+        "id": "20e5a233697d8c9c",
+        "type": "ui_text",
+        "z": "469887d1c5f61918",
+        "group": "b841bc24fa6a281e",
+        "order": 4,
+        "width": "4",
+        "height": "4",
+        "name": "",
+        "label": "GasMenge",
+        "format": "{{msg.payload}}",
+        "layout": "col-center",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 950,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "01a5e4bf8f0e3ef5",
+        "type": "ui_toast",
+        "z": "469887d1c5f61918",
+        "position": "bottom left",
+        "displayTime": "1",
+        "highlight": "red",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": true,
+        "className": "Gas AUS",
+        "topic": "GasHahn  ZU :-D",
+        "name": "Gas Aus",
+        "x": 540,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "6f7f4436d6686a9a",
+        "type": "debug",
+        "z": "469887d1c5f61918",
+        "name": "DeB",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 750,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "a99c3ce8ed47a7fc",
+        "type": "ui_toast",
+        "z": "469887d1c5f61918",
+        "position": "top right",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "className": "msg.payload",
+        "topic": "",
+        "name": "",
+        "x": 820,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "19824ca3fa330a7f",
+        "type": "ui_form",
+        "z": "469887d1c5f61918",
+        "name": "",
+        "label": "Achtung !",
+        "group": "b841bc24fa6a281e",
+        "order": 5,
+        "width": "4",
+        "height": "2",
+        "options": [
+            {
+                "label": "Nur für Korrektur",
+                "value": "Menge",
+                "type": "number",
+                "required": false,
+                "rows": null
+            }
+        ],
+        "formValue": {
+            "Menge": ""
+        },
+        "payload": "",
+        "submit": "submit",
+        "cancel": "cancel",
+        "topic": "payload",
+        "topicType": "msg",
+        "splitLayout": false,
+        "className": "",
+        "x": 350,
+        "y": 220,
+        "wires": [
+            [
+                "a99c3ce8ed47a7fc",
+                "cb445ad07cb764bf",
+                "b1022d82f4c42f1b"
+            ]
+        ]
+    },
+    {
+        "id": "cb445ad07cb764bf",
+        "type": "debug",
+        "z": "469887d1c5f61918",
+        "name": "debug 9",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 770,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "c89f0b8b5552b6e3",
+        "type": "inject",
+        "z": "469887d1c5f61918",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "34",
+        "payload": "",
+        "payloadType": "date",
+        "x": 170,
+        "y": 220,
+        "wires": [
+            [
+                "19824ca3fa330a7f"
+            ]
+        ]
+    },
+    {
+        "id": "b1022d82f4c42f1b",
+        "type": "function",
+        "z": "469887d1c5f61918",
+        "name": "closed",
+        "func": "// Eingehende Nachricht\nvar inputPayload = msg.payload;\nvar ItemValue_2 = msg.payload.Menge;\n\n// Überprüfen, ob der Payload \"closed\" ist\nif (inputPayload === \"closed\") {\n    // Wenn es \"closed\" ist, fügen Sie 1 zur Summe hinzu\n    var currentSum = flow.get(\"totalSum\") || 0;\n    currentSum += 1;\n    flow.set(\"totalSum\", currentSum);\n\n} else if (inputPayload !== \"closed\"){\n    flow.set(\"totalSum\", ItemValue_2);\n}\n\n// Die aktuelle Summe zur Ausgabe-Nachricht hinzufügen\nmsg.payload = flow.get(\"totalSum\");\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 530,
+        "y": 100,
+        "wires": [
+            [
+                "436cfeca90362dad",
+                "a3dcbb74cc28d0ec"
+            ]
+        ]
+    },
+    {
+        "id": "0475bde7bb1fd53b",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "192.168.69.165",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "b841bc24fa6a281e",
+        "type": "ui_group",
+        "name": "GasZahler",
+        "tab": "5856af2e8f18fca7",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "5856af2e8f18fca7",
+        "type": "ui_tab",
+        "name": "GasZahler",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]
